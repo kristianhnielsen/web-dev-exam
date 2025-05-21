@@ -20,17 +20,23 @@ if SUPABASE_URL is None or SUPABASE_KEY is None:
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
-@app.before_request
-def require_login():
-    # Allowed public endpoints (by function name)
-    allowed_routes = ["/", "index", "login", "signup", "static"]  # 'static' for CSS, JS
-    if request.endpoint not in allowed_routes and "access_token" not in session:
-        return redirect("/login/")
+# @app.before_request
+# def require_login():
+#     # Allowed public endpoints (by function name)
+#     allowed_routes = [
+#         "/",
+#         "/index",
+#         "/login",
+#         "/signup",
+#         "/static",
+#     ]  # 'static' for CSS, JS
+#     if request.endpoint not in allowed_routes and "access_token" not in session:
+#         return redirect("/login/")
 
 
 @app.route("/")
 def hello_world():
-    return "Hello, World!"
+    return render_template("index.html")
 
 
 @app.route("/jobs/")
@@ -57,7 +63,8 @@ def login_attempt():
 
     if result.session:
         session["user"] = result.session.access_token
-        return redirect("/Account/")
+        session["email"] = result.session.user.email
+        return redirect("/account")
     else:
         return "Login failed", 401
 
