@@ -1,6 +1,5 @@
 import json
 from flask import Flask, redirect, render_template, request, session
-
 from supabase import create_client, Client
 import dotenv
 import secrets
@@ -26,10 +25,10 @@ def hello_world():
     return "Hello, World!"
 
 
-@app.route("/jobs")
+@app.route("/jobs/")
 def jobs():
-    data = json.load(open("/job_listings.json"))
-    return render_template("/templates/index.html", jobs_data=data, job=data)
+    data = json.load(open("./job_listings.json"))
+    return render_template("jobs.html", jobs_data=data)
 
 
 @app.route("/account")
