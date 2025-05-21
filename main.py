@@ -3,6 +3,7 @@ from routes.account.account import account_bp
 from supabase import create_client, Client
 import dotenv
 import secrets
+
 # Load environment variables from .env file
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
 app.register_blueprint(account_bp)
+app.register_blueprint(jobs_bp)
 
 
 @app.route("/")
