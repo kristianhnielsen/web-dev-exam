@@ -20,6 +20,7 @@ if SUPABASE_URL is None or SUPABASE_KEY is None:
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
+# Middleware to require login for all routes except specified ones
 @app.before_request
 def require_login():
     # Allowed public endpoints (by function name)
@@ -35,6 +36,7 @@ def require_login():
         return redirect("/login")
 
 
+# Route handlers to html files
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -56,6 +58,12 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/sign-up")
+def sign_up():
+    return "Sign Up Page"
+
+
+# CRUD logic - should be in a separate file
 @app.route("/loginattempt", methods=["POST"])
 def login_attempt():
     email = request.form["email"]
@@ -68,11 +76,6 @@ def login_attempt():
         return redirect("/account")
     else:
         return "Login failed", 401
-
-
-@app.route("/sign-up")
-def sign_up():
-    return "Sign Up Page"
 
 
 if __name__ == "__main__":
