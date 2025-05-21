@@ -8,7 +8,7 @@ jobs_bp = Blueprint("jobs", __name__, url_prefix="/jobs", template_folder="templ
 @jobs_bp.route("/")
 def jobs():
     data = json.load(open("routes/jobs/job_listings.json"))
-    return render_template("index.html", jobs_data=data)
+    return render_template("index.html", jobs_data=data, job=data)
 
 
 @jobs_bp.route("/<int:job_id>")

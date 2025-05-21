@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Available Job Postings</title>
-  </head>
+{% extends "base.html" %}
+
+{% block title %}Available Job Postings - Freelancer Hub{% endblock %}
+
+{% block head_styles %}
+
+{% endblock %}
+
+{% block content %}
   <body>
     <div>
       <h1>Current Job Openings</h1>
-
+      
       {% if jobs_data and jobs_data|length > 0 %} {% for job in jobs_data %}
-      <div>
+      <div class="container">
         <h2>{{ job.title }}</h2>
         <p>Posted by: {{ job.clientName }}</p>
-
+        
         <div\>
           <p><strong>Location:</strong> {{ job.location }}</p>
           <p>
@@ -23,19 +25,20 @@
           {% if job.description %}
           <p>
             <strong>Description:</strong> {{ job.description[:200] }}{% if
-            job.description|length > 200 %}...{% endif %}
+              job.description|length > 200 %}...{% endif %}
+            </p>
+            {% endif %}
+          </div>
+          
+          
+          {% endfor %} {% else %}
+          <p>
+            No job postings available at the moment. Please check back later!
           </p>
           {% endif %}
         </div>
+        
+        
+      </body>
+{% endblock %}
 
-       
-      {% endfor %} {% else %}
-      <p>
-        No job postings available at the moment. Please check back later!
-      </p>
-      {% endif %}
-    </div>
-
-    
-  </body>
-</html>
