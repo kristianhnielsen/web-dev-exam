@@ -7,29 +7,39 @@
 {% endblock %}
 
 {% block content %}
-  <body>
+  
     <div>
       <h1>Current Job Openings</h1>
       
-      {% if jobs_data and jobs_data|length > 0 %} {% for job in jobs_data %}
+      {% if jobs_data and jobs_data|length > 0 %} 
+      {% for job in jobs_data %}
+      
       <div class="container">
         <h2>{{ job.title }}</h2>
         <p>Posted by: {{ job.clientName }}</p>
         
-        <div\>
+      </div>
           <p><strong>Location:</strong> {{ job.location }}</p>
           <p>
-            <strong>Type:</strong> {{ job.jobType }} {% if job.duration %} ({{
-            job.duration }}) {% endif %}
+            <strong>Type:</strong> {{ job.jobType }} 
+            {% if job.duration %} ({{ job.duration }}) {% endif %}
           </p>
           {% if job.description %}
           <p>
             <strong>Description:</strong> {{ job.description[:200] }}{% if
               job.description|length > 200 %}...{% endif %}
             </p>
+            </div>
+       
             {% endif %}
-          </div>
           
+          {% if user_employer and logged_in %}
+            <p class="font-weight-bold">Here's a button linking to POST JOB</p>
+           {% elif logged_in %}
+          <p class="font-weight-bold">
+            here you can apply for the job with a button opening your EMAIL 
+          </p> 
+          {% endif %}
           
           {% endfor %} {% else %}
           <p>
@@ -39,6 +49,5 @@
         </div>
         
         
-      </body>
 {% endblock %}
 
