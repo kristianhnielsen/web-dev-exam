@@ -46,7 +46,19 @@ def index():
 def jobs():
     data = supabase.table("jobposts").select("*").execute()
     data = data.data
-    return render_template("jobs.html", jobs_data=data, logged_in=("user" in session))
+    # Check if the user is an employer
+    user_id = session.get("user")
+    user_employer = False
+    if user_id:
+        user_data = supabase.table("users").select("*").eq("uuid", user_id).execute()
+        user_data = user_data.data[0] if user_data.data else None
+        user_employer = user_data.get("is_employer") if user_data else False
+    return render_template(
+        "jobs.html",
+        jobs_data=data,
+        logged_in=("user" in session),
+        user_employer=user_employer,
+    )
 
 
 @app.route("/account")
