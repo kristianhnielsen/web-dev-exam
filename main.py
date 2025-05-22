@@ -51,7 +51,7 @@ def jobs():
 
 @app.route("/account")
 def profile():
-    return "Account Page"
+    return render_template("account.html")
 
 
 @app.route("/login")
@@ -110,6 +110,13 @@ def signup_attempt():
         return redirect("/account")
     else:
         return "Sign up failed", 401
+
+
+@app.route("/logout")
+def logout():
+    supabase.auth.sign_out()
+    session.pop("user", None)
+    return redirect("/")
 
 
 if __name__ == "__main__":
