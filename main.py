@@ -42,7 +42,7 @@ def index():
     return render_template("index.html", logged_in=("user" in session))
 
 
-@app.route("/jobs")
+@app.route("/jobs", strict_slashes=False)
 def jobs():
     data = supabase.table("jobposts").select("*").execute()
     data = data.data
