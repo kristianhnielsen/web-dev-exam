@@ -1,4 +1,3 @@
-import json
 from flask import Flask, redirect, render_template, request, session
 from supabase import create_client, Client
 import dotenv
@@ -43,9 +42,10 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/jobs/")
+@app.route("/jobs")
 def jobs():
-    data = json.load(open("./job_listings.json"))
+    data = supabase.table("jobposts").select("*").execute()
+    data = data.data
     return render_template("jobs.html", jobs_data=data)
 
 
