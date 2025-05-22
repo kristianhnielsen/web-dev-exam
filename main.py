@@ -87,7 +87,7 @@ def login_attempt():
     result = supabase.auth.sign_in_with_password({"email": email, "password": password})
 
     if result.session:
-        session["user"] = result.session.access_token
+        session["user"] = result.session.user.id
         return redirect("/account")
     else:
         return "Login failed", 401
