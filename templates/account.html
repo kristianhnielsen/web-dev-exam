@@ -1,19 +1,166 @@
 {% extends "base.html" %} {% block title %}Available Job Postings - Freelancer
 Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
 
-<h1>Welcome {{ user_data.email }}</h1>
-<p>Here are your account details:</p>
-<ul>
-  <li>First Name: {{ user_data.first_name }}</li>
-  <li>Last Name: {{ user_data.last_name }}</li>
-  <li>Email: {{ user_data.email }}</li>
-  <li>Phone: {{ user_data.phone_number }}</li>
-  <li>Account Type: {{ user_data.is_employer }}</li>
-</ul>
-<a
-  href="{{ url_for('logout') }}"
-  class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800"
-  >Sign Out</a
+<section
+  class="bg-slate-100 text-slate-900 dark:bg-gray-900 dark:text-white py-16"
 >
+  <div class="max-w-screen-md mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="flex justify-center items-center text-3xl font-bold mb-8">
+      Welcome {{ user_data.first_name }}
+    </h1>
+    <div class="flex justify-center items-center gap-8">
+      <img
+        src="https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt=""
+        class="w-64 h-64 rounded-full border-4 border-gray-700 object-cover"
+      />
+      <div class="flex flex-col justify-center items-start">
+        <form
+          method="POST"
+          action="{{ url_for('edit_account') }}"
+          class="w-full"
+        >
+          <div
+            class="bg-white text-slate-900 rounded-lg p-6 shadow-md dark:bg-gray-800 dark:text-white"
+          >
+            <h2 class="mt-0 font-semibold text-lg mb-4">
+              Edit your account details
+            </h2>
+            <ul class="space-y-3">
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-2 text-blue-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <label for="first_name" class="font-medium">First Name:</label>
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  value="{{ user_data.first_name }}"
+                  class="ml-2 rounded border border-gray-300 px-2 py-1 dark:bg-gray-700 dark:text-white"
+                  required
+                />
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-2 text-blue-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <label for="last_name" class="font-medium">Last Name:</label>
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  value="{{ user_data.last_name }}"
+                  class="ml-2 rounded border border-gray-300 px-2 py-1 dark:bg-gray-700 dark:text-white"
+                  required
+                />
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-2 text-blue-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2 3a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H3a1 1 0 01-1-1V3zM9.5 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm-3-1a1 1 0 00-1 1v1a1 1 0 001 1h6a1 1 0 001-1v-1a1 1 0 00-1-1h-6zM12 8a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1v-1a1 1 0 00-1-1h-2z"
+                  ></path>
+                </svg>
+                <label for="phone_number" class="font-medium">Phone:</label>
+                <input
+                  type="text"
+                  id="phone_number"
+                  name="phone_number"
+                  value="{{ user_data.phone_number }}"
+                  class="ml-2 rounded border border-gray-300 px-2 py-1 dark:bg-gray-700 dark:text-white"
+                />
+              </li>
+            </ul>
+            <div class="mt-6">
+              <button
+                type="submit"
+                class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-6 py-2 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div
+          class="bg-white text-slate-900 rounded-lg p-6 mt-6 shadow-md dark:bg-gray-800 dark:text-white"
+        >
+          <h2 class="font-semibold text-lg mb-4">Account Type</h2>
+          <form method="POST" action="{{ url_for('edit_account_type') }}">
+            <p>
+              <label class="mr-2">
+                <input
+                  type="radio"
+                  name="is_employer"
+                  value="true"
+                  {%
+                  if
+                  user_data.is_employer
+                  %}checked{%
+                  endif
+                  %}
+                  class="mr-1"
+                />
+                <span class="text-blue-500 font-semibold">Employer</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="is_employer"
+                  value="false"
+                  {%
+                  if
+                  not
+                  user_data.is_employer
+                  %}checked{%
+                  endif
+                  %}
+                  class="mr-1"
+                />
+                <span class="text-green-500 font-semibold">Freelancer</span>
+              </label>
+            </p>
+            <button
+              type="submit"
+              class="mt-4 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-6 py-2 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+            >
+              Update Account Type
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center mt-10">
+      <a
+        href="{{ url_for('logout') }}"
+        class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-md text-lg px-6 py-3 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800 inline-block"
+        >Sign Out</a
+      >
+    </div>
+  </div>
+</section>
 
 {% endblock %}

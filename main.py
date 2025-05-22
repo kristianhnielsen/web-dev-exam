@@ -121,6 +121,42 @@ def signup_attempt():
         return "Sign up failed", 401
 
 
+@app.route("/edit_account", methods=["POST"])
+def edit_account():
+    # Get form data
+    user_id = session.get("user")
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    phone_number = request.form["phone_number"]
+
+    # Update user data in Supabase
+    supabase.table("users").update(
+        {
+            "first_name": first_name,
+            "last_name": last_name,
+            "phone_number": phone_number,
+        }
+    ).eq("uuid", user_id).execute()
+
+    return redirect("/account")
+
+
+@app.route("/edit_account_type", methods=["POST"])
+def edit_account_type():
+    # Get form data
+    user_id = session.get("user")
+    is_employer = request.form.get("is_employer", False)
+
+    # Update user data in Supabase
+    supabase.table("users").update(
+        {
+            "is_employer": is_employer,
+        }
+    ).eq("uuid", user_id).execute()
+
+    return redirect("/account")
+
+
 @app.route("/logout")
 def logout():
     supabase.auth.sign_out()
