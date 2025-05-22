@@ -39,29 +39,39 @@ def require_login():
 # Route handlers to html files
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", logged_in=("user" in session))
 
 
 @app.route("/jobs")
 def jobs():
     data = supabase.table("jobposts").select("*").execute()
     data = data.data
-    return render_template("jobs.html", jobs_data=data)
+    return render_template("jobs.html", jobs_data=data, logged_in=("user" in session))
 
 
 @app.route("/account")
 def profile():
-    return render_template("account.html")
+    # Fetch user data from Supabase
+    user_id = session.get("user")
+    if user_id:
+        user_data = supabase.table("users").select("*").eq("uuid", user_id).execute()
+        user_data = user_data.data[0] if user_data.data else None
+    else:
+        user_data = None
+    print(f"User data: {user_data}")
+    return render_template(
+        "account.html", logged_in=("user" in session), user_data=user_data
+    )
 
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    return render_template("login.html", logged_in=("user" in session))
 
 
 @app.route("/sign_up")
 def sign_up():
-    return render_template("sign_up.html")
+    return render_template("sign_up.html", logged_in=("user" in session))
 
 
 @app.route("/post_job")
@@ -78,7 +88,6 @@ def login_attempt():
 
     if result.session:
         session["user"] = result.session.access_token
-
         return redirect("/account")
     else:
         return "Login failed", 401

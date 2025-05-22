@@ -1,9 +1,14 @@
 {% extends "base.html" %} {% block title %}Available Job Postings - Freelancer
 Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
 
-<h1>Welcome {{ email }}</h1>
-
-<p>Press this button to logout</p>
-<button><a href="/logout">Here :)</a></button>
+<h1>Welcome {{ user_data.email }}</h1>
+<p>Here are your account details:</p>
+<ul>
+  <li>First Name: {{ user_data.first_name }}</li>
+  <li>Last Name: {{ user_data.last_name }}</li>
+  <li>Email: {{ user_data.email }}</li>
+  <li>Phone: {{ user_data.phone_number }}</li>
+  <li>Account Type: {{ user_data.is_employer }}</li>
+</ul>
 
 {% endblock %}
