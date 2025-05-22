@@ -23,7 +23,7 @@
           class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
         >
           <a
-            href="https://flowbite.com/"
+            href="{{ url_for('hello_world') }}"
             class="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span
@@ -116,7 +116,7 @@
       </nav>
     </header>
 
-    <main class="container">{% block content %}{% endblock %}</main>
+    <main class="mt-16">{% block content %}{% endblock %}</main>
 
     <footer>
       <p>&copy; 2025 Freelancer Portfolio Hub. All rights reserved.</p>
