@@ -50,7 +50,7 @@ def jobs():
 
 
 @app.route("/account")
-def profile():
+def account():
     # Fetch user data from Supabase
     user_id = session.get("user")
     if user_id:

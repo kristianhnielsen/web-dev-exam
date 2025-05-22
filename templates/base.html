@@ -35,11 +35,15 @@
             class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
           >
             {% if logged_in %}
-            <a
-              href="{{ url_for('logout') }}"
-              class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800"
-              >Sign Out</a
-            >
+
+            <a href="{{ url_for('account') }}" class="flex items-center">
+              <img
+                src="{{ account_img_url|default('https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff') }}"
+                alt="Account"
+                class="w-10 h-10 rounded-full border-2 border-blue-500 object-cover ml-2"
+              />
+            </a>
+
             {% else %}
 
             <a
@@ -117,7 +121,7 @@
       </nav>
     </header>
 
-    <main class="mt-16">{% block content %}{% endblock %}</main>
+    <main class="mt-20 mx-4">{% block content %}{% endblock %}</main>
 
     <script>
       // Hamburger menu toggle
