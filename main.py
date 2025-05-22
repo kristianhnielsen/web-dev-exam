@@ -29,6 +29,7 @@ def require_login():
         "login",
         "login_attempt",
         "sign_up",
+        "signup_attempt",
         "static",
         "jobs",
     ]  # 'static' for CSS, JS
@@ -58,9 +59,14 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/sign-up")
+@app.route("/sign_up")
 def sign_up():
-    return "Sign Up Page"
+    return render_template("sign_up.html")
+
+
+@app.route("/post_job")
+def post_job():
+    return "Post Job Page"
 
 
 # CRUD logic - should be in a separate file
@@ -76,6 +82,34 @@ def login_attempt():
         return redirect("/account")
     else:
         return "Login failed", 401
+
+
+@app.route("/signupattempt", methods=["POST"])
+def signup_attempt():
+    # Get form data
+    is_employer = request.form.get("is_employer", False)
+    email = request.form["email"]
+    password = request.form["password"]
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    phone_number = request.form["phone"]
+
+    result_signup = supabase.auth.sign_up({"email": email, "password": password})
+
+    if result_signup and result_signup.user:
+        supabase.table("users").insert(
+            {
+                "uuid": result_signup.user.id,
+                "first_name": first_name,
+                "last_name": last_name,
+                "phone_number": phone_number,
+                "is_employer": is_employer,
+            }
+        ).execute()
+        session["user"] = result_signup.user.id
+        return redirect("/account")
+    else:
+        return "Sign up failed", 401
 
 
 if __name__ == "__main__":
