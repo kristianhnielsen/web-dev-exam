@@ -1,7 +1,11 @@
+import ast
+from datetime import datetime, timezone
 from flask import Flask, redirect, render_template, request, session
 from supabase import create_client, Client
 import dotenv
 import secrets
+from collections import Counter
+
 
 # Load environment variables from .env file
 
@@ -39,7 +43,31 @@ def require_login():
 # Route handlers to html files
 @app.route("/")
 def index():
-    return render_template("index.html", logged_in=("user" in session))
+    data = supabase.table("jobposts").select("*").execute()
+    data = data.data
+    job_types = Counter(job["jobType"] for job in data if "jobType" in job)
+
+    data_sorted_by_latest = sorted(
+        data, key=lambda x: x.get("datePosted", ""), reverse=True
+    )
+    featured_jobs = []
+    today = datetime.now(timezone.utc)
+    for job in data_sorted_by_latest[:4]:
+        date_posted = datetime.fromisoformat(job["datePosted"])
+        days_since_posted = (today - date_posted).days
+        job["days_since_posted"] = days_since_posted
+        job["skillsRequired"] = ast.literal_eval(
+            job["skillsRequired"]
+        )  # Convert string to list
+        featured_jobs.append(job)
+
+    return render_template(
+        "index.html",
+        jobs_data=data,
+        logged_in=("user" in session),
+        job_types=job_types,
+        featured_jobs=featured_jobs,
+    )
 
 
 @app.route("/jobs", strict_slashes=False)
