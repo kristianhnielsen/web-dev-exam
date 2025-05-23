@@ -35,6 +35,7 @@ def require_login():
         "signup_attempt",
         "static",
         "jobs",
+        "job_details",
     ]  # 'static' for CSS, JS
     if request.endpoint not in allowed_routes and "user" not in session:
         return redirect("/login")
@@ -86,6 +87,33 @@ def jobs():
         jobs_data=data,
         logged_in=("user" in session),
         user_employer=user_employer,
+    )
+
+
+@app.route("/jobs/<int:job_id>", strict_slashes=False)
+def job_details(job_id):
+    job_data = supabase.table("jobposts").select("*").eq("id", job_id).execute()
+    job_data = job_data.data[0] if job_data.data else None
+
+    if job_data:
+        today = datetime.now(timezone.utc)
+        date_posted = datetime.fromisoformat(job_data["datePosted"])
+        days_since_posted = (today - date_posted).days
+        job_data["days_since_posted"] = days_since_posted
+        job_data["skillsRequired"] = ast.literal_eval(
+            job_data["skillsRequired"]
+        )  # Convert string to list
+        job_data["deadline"] = datetime.fromisoformat(job_data["deadline"]).strftime(
+            "%Y-%m-%d"
+        )
+        job_data["datePosted"] = datetime.fromisoformat(
+            job_data["datePosted"]
+        ).strftime("%Y-%m-%d")
+
+    return render_template(
+        "job_details.html",
+        job=job_data,
+        logged_in=("user" in session),
     )
 
 
