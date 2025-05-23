@@ -75,6 +75,21 @@ def index():
 def jobs():
     data = supabase.table("jobposts").select("*").execute()
     data = data.data
+
+    today = datetime.now(timezone.utc)
+    for job in data:
+        today = datetime.now(timezone.utc)
+        date_posted = datetime.fromisoformat(job["datePosted"])
+        days_since_posted = (today - date_posted).days
+        job["days_since_posted"] = days_since_posted
+        job["skillsRequired"] = ast.literal_eval(
+            job["skillsRequired"]
+        )  # Convert string to list
+        job["deadline"] = datetime.fromisoformat(job["deadline"]).strftime("%Y-%m-%d")
+        job["datePosted"] = datetime.fromisoformat(job["datePosted"]).strftime(
+            "%Y-%m-%d"
+        )
+
     # Check if the user is an employer
     user_id = session.get("user")
     user_employer = False
@@ -82,11 +97,10 @@ def jobs():
         user_data = supabase.table("users").select("*").eq("uuid", user_id).execute()
         user_data = user_data.data[0] if user_data.data else None
         user_employer = user_data.get("is_employer") if user_data else False
+
     return render_template(
         "jobs.html",
         jobs_data=data,
-        logged_in=("user" in session),
-        user_employer=user_employer,
     )
 
 
