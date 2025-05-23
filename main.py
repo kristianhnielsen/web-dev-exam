@@ -61,7 +61,6 @@ def index():
         )  # Convert string to list
         featured_jobs.append(job)
 
-    print(f"Featured jobs: {featured_jobs}")
     return render_template(
         "index.html",
         jobs_data=data,
