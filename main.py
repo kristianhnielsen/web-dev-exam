@@ -1,3 +1,4 @@
+import ast
 from datetime import datetime, timezone
 from flask import Flask, redirect, render_template, request, session
 from supabase import create_client, Client
@@ -55,6 +56,9 @@ def index():
         date_posted = datetime.fromisoformat(job["datePosted"])
         days_since_posted = (today - date_posted).days
         job["days_since_posted"] = days_since_posted
+        job["skillsRequired"] = ast.literal_eval(
+            job["skillsRequired"]
+        )  # Convert string to list
         featured_jobs.append(job)
 
     print(f"Featured jobs: {featured_jobs}")
