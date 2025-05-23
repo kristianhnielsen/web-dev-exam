@@ -141,8 +141,22 @@ def account():
     else:
         user_data = None
     print(f"User data: {user_data}")
+    response = None
+
+    if user_data and user_data.get("has_picture") is True:
+        response = supabase.storage.from_("profile-pictures").create_signed_url(
+            f"folder/{user_data['id']}", 60
+        )
+    else:
+        response = {
+            "signedURL": "https://cdn-icons-png.flaticon.com/512/3655/3655713.png"
+        }
+
     return render_template(
-        "account.html", logged_in=("user" in session), user_data=user_data
+        "account.html",
+        logged_in=("user" in session),
+        user_data=user_data,
+        image_url=response["signedURL"],
     )
 
 
