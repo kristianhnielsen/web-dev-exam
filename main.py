@@ -2,6 +2,8 @@ from flask import Flask, redirect, render_template, request, session
 from supabase import create_client, Client
 import dotenv
 import secrets
+from collections import Counter
+
 
 # Load environment variables from .env file
 
@@ -39,7 +41,13 @@ def require_login():
 # Route handlers to html files
 @app.route("/")
 def index():
-    return render_template("index.html", logged_in=("user" in session))
+    data = supabase.table("jobposts").select("*").execute()
+    data = data.data
+    job_types = Counter(job["jobType"] for job in data if "jobType" in job)
+
+    return render_template(
+        "index.html", jobs_data=data, logged_in=("user" in session), job_types=job_types
+    )
 
 
 @app.route("/jobs", strict_slashes=False)
