@@ -158,7 +158,62 @@ def sign_up():
 
 @app.route("/post_job")
 def post_job():
-    return "Post Job Page"
+    return render_template(
+        "post_job.html",
+        logged_in=("user" in session),
+    )
+
+
+@app.route("/post_job_attempt", methods=["POST"])
+def post_job_attempt():
+    # get id from users table in supabase
+    # Get user ID from session
+    user_id = session.get("user")
+    user_row = supabase.table("users").select("id").eq("uuid", user_id).execute()
+    user_id = user_row.data[0]["id"] if user_row.data else None
+    # Get form data
+    title = request.form["title"]
+    description = request.form["description"]
+    job_type = request.form["jobType"]
+    skills_required = request.form["skillsRequired"]
+    # Convert comma-separated string to list and strip whitespace
+    skills_required = [
+        skill.strip() for skill in skills_required.split(",") if skill.strip()
+    ]
+    deadline = request.form["deadline"]
+    company_email = request.form["company_email"]
+    client_name = request.form["clientName"]
+    location = request.form["location"]
+    duration = request.form["duration"]
+    status = request.form["status"]
+    is_feauture = False
+    budget_type = request.form["budget.type"]
+    budget_currency = request.form["budget.currency"]
+    budget_amount = request.form["budget.amount"]
+
+    # Insert job post into Supabase
+    supabase.table("jobposts").insert(
+        {
+            "title": title,
+            "description": description,
+            "jobType": job_type,
+            "skillsRequired": skills_required,
+            "datePosted": datetime.now(timezone.utc).isoformat(),
+            "UserID": user_id,
+            "deadline": deadline,
+            "company_email": company_email,
+            "clientName": client_name,
+            "location": location,
+            "duration": duration,
+            "status": status,
+            "isFeatured": is_feauture,
+            "budget.type": budget_type,
+            "budget.currency": budget_currency,
+            "budget.amount": budget_amount,
+        }
+    ).execute()
+
+    return redirect("/jobs")
 
 
 # CRUD logic - should be in a separate file
