@@ -53,6 +53,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
             {% endfor %}
           </div>
 
+          {% if logged_in %}
           <div class="flex flex-col sm:flex-row gap-4">
             <a
               class="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 font-medium"
@@ -61,6 +62,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
               Apply Now
             </a>
           </div>
+          {% endif %}
         </div>
 
         <!-- {/* Job Description */} -->
@@ -75,6 +77,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
       <!-- {/* Sidebar */} -->
       <div class="lg:col-span-1 mt-8 lg:mt-0">
         <!-- {/* Quick Apply */} -->
+        {% if logged_in %}
         <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
           <h3 class="text-lg font-bold mb-4">Quick Apply</h3>
           <form class="space-y-4" id="quick-apply-form">
@@ -109,7 +112,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
             </a>
           </form>
         </div>
-
+        {% endif %}
         <!-- {/* Job Details */} -->
         <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
           <h3 class="text-lg font-bold mb-4">Job Details</h3>
