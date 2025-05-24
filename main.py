@@ -76,6 +76,9 @@ def jobs():
     data = supabase.table("jobposts").select("*").execute()
     data = data.data
 
+    # Get search query from request
+    search_query = request.args.get("q", "").strip().lower()
+
     today = datetime.now(timezone.utc)
     for job in data:
         today = datetime.now(timezone.utc)
@@ -87,6 +90,17 @@ def jobs():
         job["created_at"] = datetime.fromisoformat(job["created_at"]).strftime(
             "%Y-%m-%d"
         )
+
+    # Filter jobs if search query is present
+    if search_query:
+        data = [
+            job
+            for job in data
+            if search_query in job["title"].lower()
+            or search_query in job["company"].lower()
+            or any(search_query in tag.lower() for tag in job["tags"])
+            or search_query in job["description"].lower()
+        ]
 
     # Check if the user is an employer
     user_id = session.get("user")
