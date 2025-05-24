@@ -1,21 +1,29 @@
-<section class="py-16 dark:bg-gray-800">
+<section class="py-16 bg-gray-50 dark:bg-gray-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-3xl font-bold text-center mb-12">Popular Job Categories</h2>
+    <h2
+      class="text-3xl font-bold text-center mb-12 text-slate-800 dark:text-white"
+    >
+      Popular Job Categories
+    </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {% if job_types and job_types|length > 0 %} {% for job_type, count in
       job_types.items() %}
       <div
-        class="bg-gray-50 p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
+        class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
       >
         <div
-          class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4"
+          class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-4"
         >
-          <span class="text-indigo-600 font-bold">{{ job_type[0] }}</span>
+          <span class="text-indigo-600 dark:text-indigo-300 font-bold"
+            >{{ job_type[0] }}</span
+          >
         </div>
-        <h3 class="text-xl text-slate-800 font-semibold mb-2">
+        <h3 class="text-xl text-slate-800 dark:text-white font-semibold mb-2">
           {{ job_type }}
         </h3>
-        <p class="text-gray-600">{{ count }} open positions</p>
+        <p class="text-gray-600 dark:text-gray-400">
+          {{ count }} open positions
+        </p>
       </div>
       {% endfor %} {% endif %}
     </div>
