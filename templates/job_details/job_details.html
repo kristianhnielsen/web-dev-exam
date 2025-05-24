@@ -1,0 +1,86 @@
+{% extends "base/base.html" %} {% block title %}Available Job Postings -
+Freelancer Hub{% endblock %} {% block head_styles %} {% endblock %} {% block
+content %}
+
+<section>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-slate-900">
+    <div class="lg:grid lg:grid-cols-3 lg:gap-8">
+      <!-- {/* Main Content */} -->
+      <div class="lg:col-span-2">
+        <!-- {/* Job Header */} -->
+        {% include 'job_details/_main.html' %} {% include
+        'job_details/_quick_apply.html' %}
+
+        <!-- {/* Job Description */} -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <h2 class="text-xl font-bold mb-4">Job Description</h2>
+          <p class="mb-4 text-gray-700 leading-relaxed max-w-none">
+            {{ job.description }}
+          </p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-1 mt-8 lg:mt-0">
+        <!-- {/* Quick Apply */} -->
+        {% include 'job_details/_quick_apply.html' %}
+
+        <!-- {/* Job Details */} -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <h3 class="text-lg font-bold mb-4">Job Details</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-gray-500">Job Type:</span>
+              <span class="font-medium">{{job.type}}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Duration:</span>
+              <span class="font-medium">{{job.duration}}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Location:</span>
+              <span class="font-medium">{{job.location}}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Posted:</span>
+              <span class="font-medium">{{job.created_at}}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Deadline:</span>
+              <span class="font-medium text-red-600">{{job.deadline}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const submitBtn = document.getElementById("submit-application");
+  const coverLetterInput = document.getElementById("cover-letter");
+  const rateInput = document.getElementById("rate-input");
+  const jobTitle = "{{ job.title }}";
+  const jobCurrency = "{{ job['currency'] }}";
+  const companyEmail = "{{ job.company_email }}";
+
+  submitBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const coverLetter = coverLetterInput.value;
+    const rate = rateInput.value;
+    const subject = encodeURIComponent(`Application for ${jobTitle}`);
+    const twoNewlines = "%0A%0A";
+    let body = "";
+
+    if (rate) {
+      body += `My rate: ${jobCurrency} ${rate}${twoNewlines}`;
+    }
+
+    body += encodeURIComponent(coverLetter);
+
+    const mailto = `mailto:${companyEmail}?subject=${subject}&body=${body}`;
+    window.location.href = mailto;
+  });
+</script>
+
+{% endblock %}

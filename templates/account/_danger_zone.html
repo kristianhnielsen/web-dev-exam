@@ -1,0 +1,29 @@
+<section
+  class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-red-200 dark:border-red-400"
+  aria-labelledby="danger-zone-heading"
+>
+  <h2
+    id="danger-zone-heading"
+    class="text-lg font-semibold text-red-600 dark:text-red-400 mb-4"
+  >
+    Danger Zone
+  </h2>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="text-sm text-gray-700 dark:text-gray-200 mb-2">
+        Sign out of your account
+      </p>
+      <p class="text-xs text-gray-500 dark:text-gray-400">
+        You can always sign back in anytime
+      </p>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-4">
+      <a
+        href="{{ url_for('logout') }}"
+        class="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white px-6 py-2 rounded-md font-medium"
+      >
+        Sign Out
+      </a>
+    </div>
+  </div>
+</section>

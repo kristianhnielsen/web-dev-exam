@@ -1,0 +1,76 @@
+<section class="space-y-6" aria-labelledby="account-type-heading">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+    <h2
+      id="account-type-heading"
+      class="text-lg font-semibold text-gray-900 dark:text-white mb-6"
+    >
+      Account Type
+    </h2>
+    <form
+      class="space-y-4"
+      method="POST"
+      action="{{ url_for('edit_account_type') }}"
+    >
+      <fieldset class="space-y-3">
+        <legend class="sr-only">Choose account type</legend>
+        <label
+          class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+        >
+          <input
+            type="radio"
+            name="is_employer"
+            value="false"
+            {%
+            if
+            not
+            user_data.is_employer
+            %}checked{%
+            endif
+            %}
+            class="text-indigo-600 focus:ring-indigo-500"
+          />
+          <div class="ml-3">
+            <span class="text-sm font-medium text-gray-900 dark:text-white">
+              Freelancer
+            </span>
+            <span class="text-sm text-gray-500 dark:text-gray-400 block">
+              Looking for projects and gigs
+            </span>
+          </div>
+        </label>
+
+        <label
+          class="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+        >
+          <input
+            type="radio"
+            name="is_employer"
+            value="true"
+            {%
+            if
+            user_data.is_employer
+            %}checked{%
+            endif
+            %}
+            class="text-indigo-600 focus:ring-indigo-500"
+          />
+          <div class="ml-3">
+            <span class="text-sm font-medium text-gray-900 dark:text-white">
+              Employer
+            </span>
+            <span class="text-sm text-gray-500 dark:text-gray-400 block">
+              Hiring freelancers for projects
+            </span>
+          </div>
+        </label>
+      </fieldset>
+
+      <button
+        type="submit"
+        class="w-full bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 text-white py-2 px-4 rounded-md font-medium"
+      >
+        Update Account Type
+      </button>
+    </form>
+  </div>
+</section>

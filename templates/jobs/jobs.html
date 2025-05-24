@@ -1,0 +1,32 @@
+{% extends "base/base.html" %} {% block title %}Available Job Postings -
+Freelancer Hub{% endblock %} {% block head_styles %}{% endblock %} {% block
+content %} {% if jobs_data|length > 0 %}
+
+<section
+  class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 mb-8"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="md:flex md:items-center md:justify-between">
+      <div class="md:w-3/4 mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          Find Your Next Programming Gig
+        </h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="lg:col-span-3 mt-8 lg:mt-0">
+  {% include 'jobs/_table_controls.html' %}
+
+  <!-- {# Table for larger screens #} -->
+  {% include 'jobs/_table_lg.html' %}
+
+  <!-- {# Card view for mobile & tablet screens #} -->
+  {% include 'jobs/_table_mobile.html' %}
+</div>
+{% else %}
+<div class="text-center text-gray-500">
+  <p>No job postings available at the moment.</p>
+</div>
+{% endif %} {% endblock %}

@@ -1,0 +1,27 @@
+<header class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+  <div class="flex flex-col md:flex-row md:items-center md:space-x-6">
+    <figure class="flex-shrink-0 mb-6 md:mb-0">
+      <div
+        class="w-32 h-32 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto md:mx-0"
+        aria-label="Profile Picture"
+      >
+        <img
+          src="{{ image_url }}"
+          alt="{{ user_data.first_name }} {{ user_data.last_name }}'s profile picture"
+          class="w-full h-full rounded-full object-cover"
+        />
+      </div>
+    </figure>
+    <div class="text-center md:text-left">
+      <h1
+        class="text-2xl font-bold text-gray-900 capitalize dark:text-white mb-2"
+      >
+        Welcome back, {{ user_data.first_name }}!
+      </h1>
+
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Member since {{ user_data.created_at_formatted }}
+      </p>
+    </div>
+  </div>
+</header>
