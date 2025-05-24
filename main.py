@@ -46,20 +46,18 @@ def require_login():
 def index():
     data = supabase.table("jobposts").select("*").execute()
     data = data.data
-    job_types = Counter(job["jobType"] for job in data if "jobType" in job)
+    job_types = Counter(job["type"] for job in data if "type" in job)
 
     data_sorted_by_latest = sorted(
-        data, key=lambda x: x.get("datePosted", ""), reverse=True
+        data, key=lambda x: x.get("created_at", ""), reverse=True
     )
     featured_jobs = []
     today = datetime.now(timezone.utc)
     for job in data_sorted_by_latest[:4]:
-        date_posted = datetime.fromisoformat(job["datePosted"])
+        date_posted = datetime.fromisoformat(job["created_at"])
         days_since_posted = (today - date_posted).days
         job["days_since_posted"] = days_since_posted
-        job["skillsRequired"] = ast.literal_eval(
-            job["skillsRequired"]
-        )  # Convert string to list
+        job["tags"] = ast.literal_eval(job["tags"])  # Convert string to list
         featured_jobs.append(job)
 
     return render_template(
@@ -79,14 +77,12 @@ def jobs():
     today = datetime.now(timezone.utc)
     for job in data:
         today = datetime.now(timezone.utc)
-        date_posted = datetime.fromisoformat(job["datePosted"])
+        date_posted = datetime.fromisoformat(job["created_at"])
         days_since_posted = (today - date_posted).days
         job["days_since_posted"] = days_since_posted
-        job["skillsRequired"] = ast.literal_eval(
-            job["skillsRequired"]
-        )  # Convert string to list
+        job["tags"] = ast.literal_eval(job["tags"])  # Convert string to list
         job["deadline"] = datetime.fromisoformat(job["deadline"]).strftime("%Y-%m-%d")
-        job["datePosted"] = datetime.fromisoformat(job["datePosted"]).strftime(
+        job["created_at"] = datetime.fromisoformat(job["created_at"]).strftime(
             "%Y-%m-%d"
         )
 
@@ -112,17 +108,15 @@ def job_details(job_id):
 
     if job_data:
         today = datetime.now(timezone.utc)
-        date_posted = datetime.fromisoformat(job_data["datePosted"])
+        date_posted = datetime.fromisoformat(job_data["created_at"])
         days_since_posted = (today - date_posted).days
         job_data["days_since_posted"] = days_since_posted
-        job_data["skillsRequired"] = ast.literal_eval(
-            job_data["skillsRequired"]
-        )  # Convert string to list
+        job_data["tags"] = ast.literal_eval(job_data["tags"])  # Convert string to list
         job_data["deadline"] = datetime.fromisoformat(job_data["deadline"]).strftime(
             "%Y-%m-%d"
         )
-        job_data["datePosted"] = datetime.fromisoformat(
-            job_data["datePosted"]
+        job_data["created_at"] = datetime.fromisoformat(
+            job_data["created_at"]
         ).strftime("%Y-%m-%d")
 
     return render_template(
@@ -189,42 +183,38 @@ def post_job_attempt():
     # Get form data
     title = request.form["title"]
     description = request.form["description"]
-    job_type = request.form["jobType"]
-    skills_required = request.form["skillsRequired"]
+    job_type = request.form["type"]
+    tags = request.form["tags"]
     # Convert comma-separated string to list and strip whitespace
-    skills_required = [
-        skill.strip() for skill in skills_required.split(",") if skill.strip()
-    ]
+    tags = [skill.strip() for skill in tags.split(",") if skill.strip()]
     deadline = request.form["deadline"]
     company_email = request.form["company_email"]
-    client_name = request.form["clientName"]
+    company = request.form["company"]
     location = request.form["location"]
     duration = request.form["duration"]
     status = request.form["status"]
-    is_feauture = False
-    budget_type = request.form["budget.type"]
-    budget_currency = request.form["budget.currency"]
-    budget_amount = request.form["budget.amount"]
+    basis = request.form["basis"]
+    currency = request.form["currency"]
+    salary = request.form["salary"]
 
     # Insert job post into Supabase
     supabase.table("jobposts").insert(
         {
             "title": title,
             "description": description,
-            "jobType": job_type,
-            "skillsRequired": skills_required,
-            "datePosted": datetime.now(timezone.utc).isoformat(),
+            "type": job_type,
+            "tags": tags,
+            "created_at": datetime.now(timezone.utc).isoformat(),
             "UserID": user_id,
             "deadline": deadline,
             "company_email": company_email,
-            "clientName": client_name,
+            "company": company,
             "location": location,
             "duration": duration,
             "status": status,
-            "isFeatured": is_feauture,
-            "budget.type": budget_type,
-            "budget.currency": budget_currency,
-            "budget.amount": budget_amount,
+            "basis": basis,
+            "currency": currency,
+            "salary": salary,
         }
     ).execute()
 

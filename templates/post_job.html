@@ -19,14 +19,14 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
         >
           <div>
             <label
-              for="clientName"
+              for="company"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Client Name</label
             >
             <input
               type="text"
-              name="clientName"
-              id="clientName"
+              name="company"
+              id="company"
               class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
               required
             />
@@ -61,7 +61,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
           </div>
           <div>
             <label
-              for="skillsRequired"
+              for="tags"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Skills Required (comma separated)</label
             >
@@ -70,8 +70,8 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
             >
             <input
               type="text"
-              name="skillsRequired"
-              id="skillsRequired"
+              name="tags"
+              id="tags"
               pattern="^([A-Za-z0-9\-\+\.#]+)(,[A-Za-z0-9\-\+\.#]+)*$"
               title="Please enter skills separated by commas"
               class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
@@ -80,13 +80,13 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
           </div>
           <div>
             <label
-              for="jobType"
+              for="type"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Job Type</label
             >
             <select
-              name="jobType"
-              id="jobType"
+              name="type"
+              id="type"
               class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
               required
             >
@@ -168,7 +168,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
             >
             <div class="flex space-x-2">
               <select
-                name="budget.type"
+                name="basis"
                 class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                 required
               >
@@ -177,7 +177,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
                 <option value="Hourly">Hourly</option>
               </select>
               <select
-                name="budget.currency"
+                name="currency"
                 class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
                 required
               >
@@ -188,7 +188,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
               </select>
               <input
                 type="number"
-                name="budget.amount"
+                name="salary"
                 min="0"
                 step="0.01"
                 placeholder="Amount"

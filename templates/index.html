@@ -121,7 +121,7 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
             </div>
             <div>
               <h3 class="text-xl font-semibold">{{ job.title }}</h3>
-              <p>{{ job.clientName }}</p>
+              <p>{{ job.company }}</p>
             </div>
           </div>
           {% if job.days_since_posted == 0 %}
@@ -135,11 +135,11 @@ Hub{% endblock %} {% block head_styles %} {% endblock %} {% block content %}
 
         <div class="flex justify-between mb-4">
           <span>{{ job.location }}</span>
-          <span class="font-medium capitalize">{{ job['budget.type'] }}</span>
+          <span class="font-medium capitalize">{{ job['basis'] }}</span>
         </div>
 
         <div class="flex flex-wrap gap-2 mb-4">
-          {% for skill in job.skillsRequired %}
+          {% for skill in job.tags %}
           <span
             class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full"
           >
