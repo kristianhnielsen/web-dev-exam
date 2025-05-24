@@ -164,14 +164,12 @@ def about():
             "name": "Kristian Hviid Nielsen",
             "role": "CEO & Co-Founder",
             "image_url": "https://cdn-icons-png.flaticon.com/512/3655/3655713.png",
-            "exam_number": 202200123,
             "responsibilities": ["Styling", "Frontend", "UX", "Deployment"],
         },
         {
             "name": "Lasse Lotzkat Thorsen",
             "role": "CTO & Co-Founder",
             "image_url": "https://cdn-icons-png.flaticon.com/512/3655/3655713.png",
-            "exam_number": 202200124,
             "responsibilities": ["Backend", "Database", "Authentication"],
         },
     ]
