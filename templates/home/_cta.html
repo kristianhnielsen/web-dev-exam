@@ -1,0 +1,18 @@
+{% if not logged_in %}
+<section class="py-16 dark:bg-slate-950">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
+      Ready to Get Started?
+    </h2>
+    <p class="text-lg mb-8 text-slate-700 dark:text-slate-300">
+      Join us today and take your web development skills to the next level!
+    </p>
+    <a
+      href="/sign_up"
+      class="inline-block text-indigo-600 p-3 bg-slate-100 rounded-lg border border-indigo-600 hover:border-indigo-800 hover:text-indigo-800 transition-all text-lg font-semibold px-8"
+    >
+      Sign Up Now
+    </a>
+  </div>
+</section>
+{% endif %}
