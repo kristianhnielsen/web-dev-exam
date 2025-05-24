@@ -13,7 +13,9 @@
         >Freelance Hub</span
       >
     </a>
-    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+    <div
+      class="flex md:order-2 gap-4 space-x-3 md:space-x-0 rtl:space-x-reverse"
+    >
       {% if logged_in %}
 
       <a href="{{ url_for('account') }}" class="flex items-center">
@@ -31,7 +33,7 @@
         class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
         >Sign In</a
       >
-      {% endif %}
+      {% endif %} {% include 'base/_dark_mode_toggle.html' %}
 
       <button
         data-collapse-toggle="navbar-sticky"
