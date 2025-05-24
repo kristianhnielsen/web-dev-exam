@@ -9,13 +9,12 @@ endblock %} {% block head_styles %}{% endblock %} {% block content %}
         <figure class="flex-shrink-0 mb-6 md:mb-0">
           <div
             class="w-32 h-32 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto md:mx-0"
-            aria-label="User initials"
+            aria-label="Profile Picture"
           >
-            <span
-              class="text-gray-500 uppercase dark:text-gray-300 text-4xl font-bold"
-            >
-              {{ user_data.first_name[0] }}{{ user_data.last_name[0] }}
-            </span>
+            <img
+              src="{{ image_url }}"
+              alt="{{ user_data.first_name }} {{ user_data.last_name }}'s profile picture"
+            />
           </div>
         </figure>
         <div class="text-center md:text-left">
@@ -26,7 +25,7 @@ endblock %} {% block head_styles %}{% endblock %} {% block content %}
           </h1>
 
           <p class="text-sm text-gray-500 dark:text-gray-400">
-            Member since {{ user_data.created_at }}
+            Member since {{ user_data.created_at_formatted }}
           </p>
         </div>
       </div>

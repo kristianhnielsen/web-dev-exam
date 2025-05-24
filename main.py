@@ -134,7 +134,10 @@ def account():
     user_id = session.get("user")
     if user_id:
         user_data = supabase.table("users").select("*").eq("uuid", user_id).execute()
-        user_data = user_data.data[0] if user_data.data else None
+        user_data = user_data.data[0]
+        user_data["created_at_formatted"] = datetime.fromisoformat(
+            user_data["created_at"]
+        ).strftime("%d %B %Y")
     else:
         user_data = None
     print(f"User data: {user_data}")
