@@ -279,8 +279,8 @@ def signup_attempt():
         supabase.table("users").insert(
             {
                 "uuid": result_signup.user.id,
-                "first_name": first_name,
-                "last_name": last_name,
+                "first_name": first_name.strip(),
+                "last_name": last_name.strip(),
                 "phone_number": phone_number,
                 "is_employer": is_employer,
                 "has_picture": False,
@@ -315,8 +315,8 @@ def edit_account():
     # Update user data in Supabase
     supabase.table("users").update(
         {
-            "first_name": first_name,
-            "last_name": last_name,
+            "first_name": first_name.strip(),
+            "last_name": last_name.strip(),
             "phone_number": phone_number,
         }
     ).eq("uuid", user_id).execute()
