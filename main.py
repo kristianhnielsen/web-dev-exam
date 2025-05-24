@@ -134,7 +134,10 @@ def account():
     user_id = session.get("user")
     if user_id:
         user_data = supabase.table("users").select("*").eq("uuid", user_id).execute()
-        user_data = user_data.data[0] if user_data.data else None
+        user_data = user_data.data[0]
+        user_data["created_at_formatted"] = datetime.fromisoformat(
+            user_data["created_at"]
+        ).strftime("%d %B %Y")
     else:
         user_data = None
     print(f"User data: {user_data}")
@@ -333,6 +336,31 @@ def edit_account_type():
             "is_employer": is_employer,
         }
     ).eq("uuid", user_id).execute()
+
+    return redirect("/account")
+
+
+@app.route("/upload_profile_image", methods=["POST"])
+def upload_profile_image():
+    user_id = session.get("user")
+    image = request.files.get("profile_image")
+
+    if user_id and image:
+        # Upload the image to Supabase storage
+        file_path = f"folder/{user_id}"
+        image_bytes = image.read()
+
+        response = supabase.storage.from_("profile-pictures").update(
+            file=image_bytes,
+            path=file_path,
+            file_options={"content-type": image.mimetype, "upsert": "true"},
+        )
+        print(f"Upload response: {response}")
+
+        # Update the user record to indicate that the user has a profile picture
+        supabase.table("users").update({"has_picture": True}).eq(
+            "uuid", user_id
+        ).execute()
 
     return redirect("/account")
 
