@@ -245,6 +245,8 @@ def signup_attempt():
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
     phone_number = request.form["phone"]
+    # get image upload from form
+    image = request.files["profile_image"]
 
     result_signup = supabase.auth.sign_up({"email": email, "password": password})
 
@@ -256,9 +258,21 @@ def signup_attempt():
                 "last_name": last_name,
                 "phone_number": phone_number,
                 "is_employer": is_employer,
+                "has_picture": False,
             }
         ).execute()
         session["user"] = result_signup.user.id
+        # Upload image to Supabase storage
+        if image:
+            # Upload the image to Supabase storage
+            file_path = f"folder/{result_signup.user.id}"
+            image_bytes = image.read()
+            supabase.storage.from_("profile-pictures").upload(file_path, image_bytes)
+
+            # Update the user record to indicate that the user has a profile picture
+            supabase.table("users").update({"has_picture": True}).eq(
+                "uuid", result_signup.user.id
+            ).execute()
         return redirect("/account")
     else:
         return "Sign up failed", 401
