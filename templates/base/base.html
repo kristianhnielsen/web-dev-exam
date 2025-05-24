@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Freelancer Portfolio Hub - Connecting Freelancers with Clients"
+    />
+    {% block head_meta %}{% endblock %}
+    <title>{% block title %}Freelancer Hub{% endblock %}</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    {% block head_styles %}{% endblock %} {% block head_scripts_top %}{%
+    endblock %}
+  </head>
+  <body class="bg-slate-100 text-slate-900 dark:bg-gray-900 dark:text-white">
+    <header>{% include 'base/_navbar.html' %}</header>
+
+    <main class="mt-20 mx-4">{% block content %}{% endblock %}</main>
+
+    {% include 'base/_footer.html' %}
+
+    <script>
+      // Hamburger menu toggle
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.getElementById("hamburger");
+        const navbar = document.getElementById("navbar-sticky");
+        if (hamburger && navbar) {
+          hamburger.addEventListener("click", function () {
+            navbar.classList.toggle("hidden");
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

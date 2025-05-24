@@ -62,7 +62,7 @@ def index():
         featured_jobs.append(job)
 
     return render_template(
-        "index.html",
+        "home/index.html",
         jobs_data=data,
         logged_in=("user" in session),
         job_types=job_types,
@@ -96,7 +96,7 @@ def jobs():
         user_employer = user_data.get("is_employer") if user_data else False
 
     return render_template(
-        "jobs.html",
+        "jobs/jobs.html",
         jobs_data=data,
         user_employer=user_employer,
         logged_in=("user" in session),
@@ -122,7 +122,7 @@ def job_details(job_id):
         ).strftime("%Y-%m-%d")
 
     return render_template(
-        "job_details.html",
+        "job_details/job_details.html",
         job=job_data,
         logged_in=("user" in session),
     )
@@ -153,7 +153,7 @@ def account():
         }
 
     return render_template(
-        "account.html",
+        "account/account.html",
         logged_in=("user" in session),
         user_data=user_data,
         image_url=response["signedURL"],
@@ -177,7 +177,7 @@ def about():
         },
     ]
     return render_template(
-        "about.html", logged_in=("user" in session), team_members=team_members
+        "about/about.html", logged_in=("user" in session), team_members=team_members
     )
 
 
@@ -194,7 +194,7 @@ def sign_up():
 @app.route("/post_job")
 def post_job():
     return render_template(
-        "post_job.html",
+        "post_job/post_job.html",
         logged_in=("user" in session),
     )
 

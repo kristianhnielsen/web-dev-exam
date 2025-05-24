@@ -1,0 +1,21 @@
+{% extends "base/base.html" %} {% block title %}Available Job Postings -
+Freelancer Hub{% endblock %} {% block head_styles %}{% endblock %} {% block
+content %}
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <section
+    class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20 dark:from-indigo-900 dark:to-purple-900"
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">About Freelance Hub</h1>
+      <p class="text-xl max-w-3xl mx-auto text-white dark:text-gray-200">
+        We're on a mission to revolutionize how freelance developers connect
+        with meaningful projects and how companies find exceptional talent.
+      </p>
+    </div>
+  </section>
+
+  {% include 'about/_our_team.html' %} {% include 'about/_different.html' %} {%
+  include 'about/_stats.html' %}
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base/base.html" %} {% block title %}Available Job Postings -
+Freelancer Hub{% endblock %} {% block head_styles %} {% endblock %} {% block
+content %}
+
+<section
+  class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="md:flex md:items-center md:justify-between">
+      <div class="md:w-3/4 mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          Find Your Next Programming Gig
+        </h1>
+        <p class="text-xl mb-8">
+          Connect with top companies looking for talented freelance developers.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Job Categories -->
+{% include 'home/_categories.html' %}
+
+<!-- {/* How It Works */} -->
+{% include 'home/_steps.html' %}
+
+<!-- {/* Featured Jobs */} -->
+{% include 'home/_featured_jobs.html' %} {% endblock %}
