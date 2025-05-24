@@ -101,6 +101,7 @@ def jobs():
     return render_template(
         "jobs.html",
         jobs_data=data,
+        user_employer=user_employer,
     )
 
 
