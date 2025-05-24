@@ -36,6 +36,7 @@ def require_login():
         "static",
         "jobs",
         "job_details",
+        "about",
     ]  # 'static' for CSS, JS
     if request.endpoint not in allowed_routes and "user" not in session:
         return redirect("/login")
@@ -153,6 +154,29 @@ def account():
         logged_in=("user" in session),
         user_data=user_data,
         image_url=response["signedURL"],
+    )
+
+
+@app.route("/about")
+def about():
+    team_members = [
+        {
+            "name": "Kristian Hviid Nielsen",
+            "role": "CEO & Co-Founder",
+            "image_url": "https://cdn-icons-png.flaticon.com/512/3655/3655713.png",
+            "exam_number": 202200123,
+            "responsibilities": ["Styling", "Frontend", "UX", "Deployment"],
+        },
+        {
+            "name": "Lasse Lotzkat Thorsen",
+            "role": "CTO & Co-Founder",
+            "image_url": "https://cdn-icons-png.flaticon.com/512/3655/3655713.png",
+            "exam_number": 202200124,
+            "responsibilities": ["Backend", "Database", "Authentication"],
+        },
+    ]
+    return render_template(
+        "about.html", logged_in=("user" in session), team_members=team_members
     )
 
 
