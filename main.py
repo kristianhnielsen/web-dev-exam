@@ -98,6 +98,7 @@ def jobs():
         "jobs.html",
         jobs_data=data,
         user_employer=user_employer,
+        logged_in=("user" in session),
     )
 
 
