@@ -35,8 +35,10 @@ endblock %} {% block head_styles %}{% endblock %} {% block content %}
     </header>
 
     <!-- Profile Image Section -->
-    <div class="bg-white rounded-lg shadow-sm p-4">
-      <h3 class="text-lg font-semibold text-gray-900 mb-6">Profile Picture</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+        Profile Picture
+      </h3>
       <div class="flex flex-col items-center space-y-4">
         <div class="relative">
           {% if image_url %}
@@ -65,7 +67,7 @@ endblock %} {% block head_styles %}{% endblock %} {% block content %}
         </div>
 
         <div class="text-center">
-          <p class="text-sm text-gray-600 mb-4">
+          <p class="text-sm text-gray-600 dark:text-white mb-4">
             Upload a professional photo to help clients recognize you
           </p>
           <form
@@ -112,7 +114,7 @@ endblock %} {% block head_styles %}{% endblock %} {% block content %}
             </button>
           </form>
           {% endif %}
-          <p class="text-xs text-gray-500 mt-2">
+          <p class="text-xs text-gray-500 dark:text-white mt-2">
             Supported formats: JPG, PNG, GIF (max 5MB)
           </p>
         </div>
