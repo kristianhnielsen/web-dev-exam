@@ -18,6 +18,7 @@ if jobs_data|length > 0 %}
 </section>
 
 <div class="lg:col-span-3 mt-8 lg:mt-0">
+
   <!-- {# Sort Options #} -->
   <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -31,6 +32,13 @@ if jobs_data|length > 0 %}
           <option>Company A-Z</option>
         </select>
       </div>
+
+      {% if user_employer %}
+      <!-- Post Job Button -->
+      <div>
+        <a href="{{ url_for('post_job') }}" class="rounded-md p-4 bg-indigo-600 hover:bg-indigo-800 text-slate-100">New Job Post</a>
+      </div>
+      {% endif %}
       
       <!-- {/* Search Bar */} -->
       <div class="rounded-lg flex items-center shadow-lg max-w-2xl border-2 border-indigo-600 ">
@@ -47,8 +55,13 @@ if jobs_data|length > 0 %}
           <span class="ml-2">&#10132;</span>
         </button>
       </div>
+      
+      
+      
     </div>
   </div>
+
+
 
   <!-- {# Table for larger screens #} -->
   <div
