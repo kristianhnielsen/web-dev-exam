@@ -1,11 +1,11 @@
-<div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+<div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-4 mb-6">
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
     {% if user_employer %}
     <!-- Post Job Button -->
     <div>
       <a
         href="{{ url_for('post_job') }}"
-        class="rounded-md p-4 bg-indigo-600 hover:bg-indigo-800 text-slate-100"
+        class="rounded-md p-4 bg-indigo-600 hover:bg-indigo-800 text-slate-100 dark:bg-indigo-700 dark:hover:bg-indigo-900 dark:text-white"
         >Post a new job</a
       >
     </div>
@@ -15,21 +15,21 @@
     <form
       method="get"
       action="{{ url_for('jobs') }}"
-      class="rounded-lg flex items-center shadow-lg max-w-2xl border-2 border-indigo-600"
+      class="rounded-lg flex items-center shadow-lg max-w-2xl border-2 border-indigo-600 dark:border-indigo-400"
     >
       <div class="flex-grow flex items-center px-3">
-        <span class="text-gray-400 mr-2">&#128269;</span>
+        <span class="text-gray-400 dark:text-gray-300 mr-2">&#128269;</span>
         <input
           type="text"
           name="q"
           placeholder="Search for jobs..."
-          class="w-full py-2 focus:outline-none text-gray-700"
+          class="w-full py-2 focus:outline-none text-gray-700 dark:text-gray-100 dark:bg-slate-800"
           value="{{ request.args.get('q', '') }}"
         />
       </div>
       <button
         type="submit"
-        class="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 flex items-center"
+        class="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 flex items-center dark:bg-indigo-700 dark:hover:bg-indigo-900"
       >
         Search
         <span class="ml-2">&#10132;</span>

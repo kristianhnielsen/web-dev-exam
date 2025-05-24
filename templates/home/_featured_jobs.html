@@ -1,51 +1,63 @@
-<section class="py-16 dark:bg-gray-800">
+<section class="py-16 bg-white dark:bg-gray-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center mb-12">
-      <h2 class="text-3xl font-bold">Featured Jobs</h2>
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+        Featured Jobs
+      </h2>
       <a
         href="{{ url_for('jobs') }}"
-        class="text-indigo-600 p-2 bg-slate-100 rounded-lg border-indigo-600 hover:border-indigo-800 hover:text-indigo-800 gap-2 hover:gap-4 transition-all flex items-center"
+        class="text-indigo-600 dark:text-indigo-400 p-2 bg-slate-100 dark:bg-gray-900 rounded-lg border border-indigo-600 dark:border-indigo-400 hover:border-indigo-800 dark:hover:border-indigo-300 hover:text-indigo-800 dark:hover:text-indigo-200 gap-2 hover:gap-4 transition-all flex items-center"
       >
         View all jobs
         <span>&#10132;</span>
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-700">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-700 dark:text-slate-200"
+    >
       {% for job in featured_jobs %}
       <div
-        class="p-6 bg-slate-100 flex flex-col rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
+        class="p-6 bg-slate-100 dark:bg-gray-900 flex flex-col rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
       >
         <div class="flex justify-between mb-4">
           <div class="flex items-center">
             <div
-              class="w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center mr-4"
+              class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-md flex items-center justify-center mr-4"
             >
-              <span class="font-bold">1</span>
+              <span class="font-bold text-gray-900 dark:text-white">1</span>
             </div>
             <div>
-              <h3 class="text-xl font-semibold">{{ job.title }}</h3>
-              <p>{{ job.company }}</p>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                {{ job.title }}
+              </h3>
+              <p class="text-gray-700 dark:text-gray-300">{{ job.company }}</p>
             </div>
           </div>
           {% if job.days_since_posted == 0 %}
-          <span class="text-green-600 text-sm font-medium">Today</span>
+          <span class="text-green-600 dark:text-green-400 text-sm font-medium"
+            >Today</span
+          >
           {% else %}
-          <span class="text-green-600 text-sm font-medium"
+          <span class="text-green-600 dark:text-green-400 text-sm font-medium"
             >{{ job.days_since_posted }} days ago</span
           >
           {% endif %}
         </div>
 
         <div class="flex justify-between mb-4">
-          <span>{{ job.location }}</span>
-          <span class="font-medium capitalize">{{ job['basis'] }}</span>
+          <span class="text-gray-700 dark:text-gray-300"
+            >{{ job.location }}</span
+          >
+          <span class="font-medium capitalize text-gray-900 dark:text-white"
+            >{{ job['basis'] }}</span
+          >
         </div>
 
         <div class="flex flex-wrap gap-2 mb-4">
           {% for skill in job.tags %}
           <span
-            class="bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full"
+            class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs px-3 py-1 rounded-full"
           >
             {{ skill }}
           </span>
@@ -54,7 +66,7 @@
 
         <a
           href="{{ url_for('job_details', job_id=job.id) }}"
-          class="text-center mt-auto bg-white text-indigo-600 border border-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-50"
+          class="text-center mt-auto bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 border border-indigo-600 dark:border-indigo-400 px-4 py-2 rounded-md hover:bg-indigo-50 dark:hover:bg-gray-700"
         >
           View Details
         </a>
