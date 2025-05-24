@@ -340,6 +340,31 @@ def edit_account_type():
     return redirect("/account")
 
 
+@app.route("/upload_profile_image", methods=["POST"])
+def upload_profile_image():
+    user_id = session.get("user")
+    image = request.files.get("profile_image")
+
+    if user_id and image:
+        # Upload the image to Supabase storage
+        file_path = f"folder/{user_id}"
+        image_bytes = image.read()
+
+        response = supabase.storage.from_("profile-pictures").update(
+            file=image_bytes,
+            path=file_path,
+            file_options={"content-type": image.mimetype, "upsert": "true"},
+        )
+        print(f"Upload response: {response}")
+
+        # Update the user record to indicate that the user has a profile picture
+        supabase.table("users").update({"has_picture": True}).eq(
+            "uuid", user_id
+        ).execute()
+
+    return redirect("/account")
+
+
 @app.route("/logout")
 def logout():
     supabase.auth.sign_out()
