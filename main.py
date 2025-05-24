@@ -141,7 +141,7 @@ def account():
 
     if user_data and user_data.get("has_picture") is True:
         response = supabase.storage.from_("profile-pictures").create_signed_url(
-            f"folder/{user_data['id']}", 60
+            f"folder/{user_data['uuid']}", 60
         )
     else:
         response = {
@@ -246,7 +246,7 @@ def signup_attempt():
     last_name = request.form["last_name"]
     phone_number = request.form["phone"]
     # get image upload from form
-    image = request.files["profile_image"]
+    image = request.files.get("profile_image")
 
     result_signup = supabase.auth.sign_up({"email": email, "password": password})
 
@@ -267,8 +267,9 @@ def signup_attempt():
             # Upload the image to Supabase storage
             file_path = f"folder/{result_signup.user.id}"
             image_bytes = image.read()
-            supabase.storage.from_("profile-pictures").upload(file_path, image_bytes)
-
+            supabase.storage.from_("profile-pictures").upload(
+                file_path, image_bytes, {"content-type": image.mimetype}
+            )
             # Update the user record to indicate that the user has a profile picture
             supabase.table("users").update({"has_picture": True}).eq(
                 "uuid", result_signup.user.id
