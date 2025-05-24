@@ -1,0 +1,23 @@
+{% extends "base/base.html" %} {% block title %}Available Job Postings -
+Freelancer Hub{% endblock %} {% block head_styles %} {% endblock %} {% block
+content %}
+
+<section class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Contact Form -->
+      {% include "contact/_contact_form.html" %}
+
+      <!-- Map and Office Info -->
+      <aside class="space-y-6">
+        <!-- Information -->
+        {% include "contact/_contact_details.html" %}
+
+        <!-- Map -->
+        {% include "contact/_map.html" %}
+      </aside>
+    </div>
+  </section>
+</section>
+
+{% endblock %}

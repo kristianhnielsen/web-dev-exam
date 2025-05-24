@@ -37,6 +37,7 @@ def require_login():
         "jobs",
         "job_details",
         "about",
+        "contact",
     ]  # 'static' for CSS, JS
     if request.endpoint not in allowed_routes and "user" not in session:
         return redirect("/login")
@@ -179,6 +180,11 @@ def about():
     return render_template(
         "about/about.html", logged_in=("user" in session), team_members=team_members
     )
+
+
+@app.route("/contact", strict_slashes=False)
+def contact():
+    return render_template("contact/contact.html", logged_in=("user" in session))
 
 
 @app.route("/login")
