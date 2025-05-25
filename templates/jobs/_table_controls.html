@@ -1,8 +1,10 @@
 <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-4 mb-6">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+  <div
+    class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+  >
     {% if user_employer %}
     <!-- Post Job Button -->
-    <div>
+    <div class="mb-4 mt-4 sm:mb-0">
       <a
         href="{{ url_for('post_job') }}"
         class="rounded-md p-4 bg-indigo-600 hover:bg-indigo-800 text-slate-100 dark:bg-indigo-700 dark:hover:bg-indigo-900 dark:text-white"
