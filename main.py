@@ -1,11 +1,10 @@
-import ast
 from datetime import datetime, timezone
 from flask import Flask, redirect, render_template, request, session
 from supabase import create_client, Client
 import dotenv
 import secrets
 from collections import Counter
-
+import helper
 
 # Load environment variables from .env file
 
@@ -54,12 +53,8 @@ def index():
         data, key=lambda x: x.get("created_at", ""), reverse=True
     )
     featured_jobs = []
-    today = datetime.now(timezone.utc)
     for job in data_sorted_by_latest[:4]:
-        date_posted = datetime.fromisoformat(job["created_at"])
-        days_since_posted = (today - date_posted).days
-        job["days_since_posted"] = days_since_posted
-        job["tags"] = ast.literal_eval(job["tags"])  # Convert string to list
+        job = helper.format_job_data(job)
         featured_jobs.append(job)
 
     return render_template(
@@ -79,17 +74,8 @@ def jobs():
     # Get search query from request
     search_query = request.args.get("q", "").strip().lower()
 
-    today = datetime.now(timezone.utc)
     for job in data:
-        today = datetime.now(timezone.utc)
-        date_posted = datetime.fromisoformat(job["created_at"])
-        days_since_posted = (today - date_posted).days
-        job["days_since_posted"] = days_since_posted
-        job["tags"] = ast.literal_eval(job["tags"])  # Convert string to list
-        job["deadline"] = datetime.fromisoformat(job["deadline"]).strftime("%Y-%m-%d")
-        job["created_at"] = datetime.fromisoformat(job["created_at"]).strftime(
-            "%Y-%m-%d"
-        )
+        job = helper.format_job_data(job)
 
     # Filter jobs if search query is present
     if search_query:
@@ -102,18 +88,10 @@ def jobs():
             or search_query in job["description"].lower()
         ]
 
-    # Check if the user is an employer
-    user_id = session.get("user")
-    user_employer = False
-    if user_id:
-        user_data = supabase.table("users").select("*").eq("uuid", user_id).execute()
-        user_data = user_data.data[0] if user_data.data else None
-        user_employer = user_data.get("is_employer") if user_data else False
-
     return render_template(
         "jobs/jobs.html",
         jobs_data=data,
-        user_employer=user_employer,
+        user_employer=helper.is_user_employer(supabase),
         logged_in=("user" in session),
     )
 
@@ -124,17 +102,7 @@ def job_details(job_id):
     job_data = job_data.data[0] if job_data.data else None
 
     if job_data:
-        today = datetime.now(timezone.utc)
-        date_posted = datetime.fromisoformat(job_data["created_at"])
-        days_since_posted = (today - date_posted).days
-        job_data["days_since_posted"] = days_since_posted
-        job_data["tags"] = ast.literal_eval(job_data["tags"])  # Convert string to list
-        job_data["deadline"] = datetime.fromisoformat(job_data["deadline"]).strftime(
-            "%Y-%m-%d"
-        )
-        job_data["created_at"] = datetime.fromisoformat(
-            job_data["created_at"]
-        ).strftime("%Y-%m-%d")
+        job_data = helper.format_job_data(job_data)
 
     return render_template(
         "job_details/job_details.html",
@@ -156,22 +124,14 @@ def account():
     else:
         user_data = None
     print(f"User data: {user_data}")
-    response = None
 
-    if user_data and user_data.get("has_picture") is True:
-        response = supabase.storage.from_("profile-pictures").create_signed_url(
-            f"folder/{user_data['uuid']}", 60
-        )
-    else:
-        response = {
-            "signedURL": "https://cdn-icons-png.flaticon.com/512/3655/3655713.png"
-        }
+    iamge_url = helper.get_profile_image_url(user_data, supabase)
 
     return render_template(
         "account/account.html",
         logged_in=("user" in session),
         user_data=user_data,
-        image_url=response["signedURL"],
+        image_url=iamge_url,
     )
 
 
